@@ -1,166 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Práctica 5 - DAW2</title>
-
-<!-- PARTE 2: FAVICON -->
-<link rel="icon" type="image/png" href="favicon.png">
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  text-align: center;
-}
-
-video, audio {
-  max-width: 100%;
-}
-
-.dropzone {
-  width: 300px;
-  height: 200px;
-  border: 3px dashed #666;
-  margin: auto;
-  line-height: 200px;
-}
-
-canvas {
-  border: 2px solid black;
-  margin-top: 20px;
-}
-
-.animado {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: 1s;
-}
-
-.animado.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-</style>jj
-</head>
-<body>
-
-<h1>Bienvenidos</h1>
-
-<h2>Vídeo promocional</h2>
-<video id="video" muted playsinline controls>
-  <source src="video.mp4" type="video/mp4">
-  <source src="video.webm" type="video/webm">
-  Tu navegador no soporta vídeo HTML5.
-  <track src="subtitulos.vtt" kind="subtitles" srclang="es" label="Español" default>
-</video>
-
-<h2>Audio informativo (Pulsa tecla P)</h2>
-<audio id="audio" controls>
-  <source src="audio.mp3" type="audio/mpeg">
-  <source src="audio.ogg" type="audio/ogg">
-</audio>
-
-<h2>Imagen optimizada</h2>
-<picture>
-  <source srcset="imagen.webp" type="image/webp" width="150">
-  <source srcset="imagen.avif" type="image/avif">
-  <img src="imagen.jpg" alt="Imagen promocional del producto">
-</picture>
-
-<h2>Arrastra la imagen</h2>
-<img src="imagen.jpg" id="drag" draggable="true" width="150" alt="Imagen arrastrable">
-
-<div class="dropzone" id="dropzone">Suelta aquí</div>
-
-<h2>Canvas interactivo</h2>
-<canvas id="canvas" width="400" height="300"></canvas>
-
-<div class="animado">
-  <h2>Elemento animado al hacer scroll</h2>
-</div>
-
-<script>
-// VIDEO INTERSECTION OBSERVER
-const video = document.getElementById("video");
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      video.play();
-    } else {
-      video.pause();
-    }
-  });
-}, { threshold: 0.5 });
-
-observer.observe(video);
-
-// AUDIO CONTROL POR TECLADO
-const audio = document.getElementById("audio");
-
-document.addEventListener("keydown", (e) => {
-  if (e.key.toLowerCase() === "p") {
-    audio.paused ? audio.play() : audio.pause();
-  }
-});
-
-// DRAG & DROP
-const drag = document.getElementById("drag");
-const dropzone = document.getElementById("dropzone");
-
-drag.addEventListener("dragstart", (e) => {
-  e.dataTransfer.setData("text", "imagen");
-});
-
-dropzone.addEventListener("dragover", (e) => {
-  e.preventDefault();
-});
-
-dropzone.addEventListener("drop", (e) => {
-  e.preventDefault();
-  alert("Imagen soltada correctamente");
-});
-
-// CANVAS
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-let x = 200;
-let y = 150;
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.arc(x, y, 20, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-draw();
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowUp") y -= 10;
-  if (e.key === "ArrowDown") y += 10;
-  if (e.key === "ArrowLeft") x -= 10;
-  if (e.key === "ArrowRight") x += 10;
-  draw();
-});
-
-// ANIMACIÓN SCROLL
-const animado = document.querySelector(".animado");
-
-const observer2 = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animado.classList.add("visible");
-    }
-  });
-});
-
-observer2.observe(animado);
-
-</script>
-
-</body>
+<!DOCTYPE html>  
+<html lang="es"> 
+<head> 
+<meta charset="UTF-8"> 
+<title>Web multimedia</title> 
+<style> 
+body { font-family: Arial; } 
+video { width: 600px; } 
+</style> 
+</head> 
+<body> 
+<h1>Bienvenidos</h1> 
+<h2>Vídeo promocional</h2> 
+<video autoplay> 
+<source src="video.webm" type="video/webm" width="100"> 
+</video> 
+<h2>Audio informativo</h2> 
+<audio autoplay> 
+<source src="audio.ogg" type="audio/ogg"> 
+</audio> 
+<h2>Imagen destacada</h2> 
+<img src="imagen.avif" width="100"> 
+<h2>Arrastra la imagen</h2> 
+<img src="imagen.webp" draggable="true" width="100"> 
+</body> 
 </html>
